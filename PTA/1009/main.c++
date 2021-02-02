@@ -23,11 +23,11 @@ int main()
         {        
             if(i==a-1)
             {
-                cout<<input.substr(space[i]+1);
+                cout<<input.substr(space[i]+1);//子字符串 str.substr(a)返回从a开始的子字符串
             }
             else if (i==0)
             {
-                cout<<" "<<input.substr(space[i],space[i+1]-space[i]);
+                cout<<" "<<input.substr(space[i],space[i+1]-space[i]);//str.substr(a，b)返回从a开始的b个字符长度的子字符串
             }
             
             else
