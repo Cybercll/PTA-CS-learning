@@ -5,7 +5,6 @@ int main()
 {
     string input;
     getline(cin,input);//输入一整行
-    int before,after;
     int space[80]{0};
     int a=1;
     for (int i = 0; i < input.size(); i++)
