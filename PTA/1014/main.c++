@@ -1,111 +1,53 @@
 #include<iostream>
-#include<algorithm>
+#include<string>
 using namespace std;
-struct data
-{
-    long int id;//学号
-    int df;//德分
-    int cf;//才分
-    int sum;//二者之和
-};
-
-bool Cmpare(const struct data & a, const struct data & b) //const必须加，不然会错。当return的是ture时，a先输出，所以示例中是升序
-{
-    if (a.sum>b.sum)
-    {
-        return 1;//若前者大于后者 则为true 不进行交换
-    }
-    else if (a.sum<b.sum)
-    {
-        return 0;
-    }
-    else if (a.sum==b.sum)
-    {
-        if (a.df>b.df)
-        {
-            return 1;
-        }
-        else if (a.df<b.df)
-        {
-            return 0;
-        }
-        else if (a.df==b.df)
-        {
-            if (a.id>b.id)
-            {
-                return 0;
-            }
-            else
-            {
-            return 1;
-            }
-        }
-    }
-    return 1;
-}
-
-void outputdata(struct data a[],int num)
-{
-    for (int i = 0; i < num; i++)
-    {
-        cout<<a[i].id<<" "<<a[i].df<<" "<<a[i].cf<<endl;;
-    }
-    
-}
 int main()
 {
-    int N=0,L=0,H=100;
-    struct data firstkind[10000];int firstnum=0;
-    struct data secondkind[10000];int secondnum=0;
-    struct data thirdkind[10000];int thirdnum=0;
-    struct data other[10000];int othernum=0;
-    cin>>N>>L>>H;
-    struct data ing;
-    for (int i = 0; i < N; i++)
+    string a,b,c,d;
+    cin>>a>>b>>c>>d;
+    char day='A',hour='A';int min=0;
+    string showday[7]{"MON","TUE","WED","THU","FRI","SAT","SUN"};
+    int foundnum=0;
+    for (int i = 0; i < a.length()&&i<b.length(); i++)
     {
-        cin>>ing.id>>ing.df>>ing.cf;
-        ing.sum=ing.df+ing.cf;
-        if(ing.df>=L&&ing.cf>=L)//及格线
+        if (foundnum==1&&a.at(i)==b.at(i)&&(a.at(i)>='A'&&a.at(i)<='Z'||a.at(i)>='0'&&a.at(i)<='9'))
         {
-            if (ing.df>=H&&ing.cf>=H)//德才兼备
-            {
-                firstkind[firstnum]=ing;
-                firstnum++;
-            }
-            else if (ing.df>=H&&ing.cf<H)//德胜于才
-            {
-                secondkind[secondnum]=ing;
-                secondnum++;
-            }
-            else if (ing.df<H&&ing.cf<H&&ing.df>ing.cf)//第三类
-            {
-                thirdkind[thirdnum]=ing;
-                thirdnum++;
-            }
-            else//都不行但是及格了
-            {
-                other[othernum]=ing;
-                othernum++;
-            }
+            hour=b.at(i);
+            foundnum++;
+        }
+        if (foundnum==0&&a.at(i)==b.at(i)&&a.at(i)>='A'&&a.at(i)<='Z')
+        {
+            day=a.at(i);
+            foundnum++;
         }
     }
-    sort(firstkind,firstkind+ firstnum,Cmpare);
-    sort(secondkind,secondkind+ secondnum,Cmpare);
-    sort(thirdkind,thirdkind+ thirdnum,Cmpare);
-    sort(other,other+ othernum,Cmpare);
-
-    cout<<firstnum+secondnum+thirdnum+othernum<<endl;
-    outputdata(firstkind,firstnum);
-    outputdata(secondkind,secondnum);
-    outputdata(thirdkind,thirdnum);
-    outputdata(other,othernum);
-    
+    for (int i = 0; i < c.length()&&i<d.length(); i++)
+    {
+        if (foundnum==2&&c.at(i)==d.at(i)&&c.at(i)>='A'&&c.at(i)<='z')
+        {
+            min=i;
+            foundnum++;
+        }
+    }
+    cout<<showday[day-'A']<<" ";
+    if(hour<='Z'&&hour>='A')
+    {
+        cout<<int(hour-'A'+10);
+    }
+    else
+    {
+        cout<<'0'<<hour;
+    }
+    cout<<':';
+    if(min<10)
+    {
+        cout<<'0'<<min;
+    }
+    else 
+    {
+        cout<<min;
+    }
+    cout<<endl;
     cin.get();
     return 0;
 }
-//搁这考阅读理解呢？
-//第一类df&cf>H
-//第二类cf<H & df>H
-//第三类df&cf<H df>cf
-//其他类 df&cf<H df<cf
-//16分
